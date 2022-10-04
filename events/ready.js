@@ -2,12 +2,14 @@ const {REST} = require('@discordjs/rest')
 const {Routes} = require('discord-api-types/v9')
 require('dotenv').config();
 const mongoose = require("mongoose")
+const breadGive = require("../events/breadGive")
 
 module.exports = {
     name: "ready",
     once: true,
     async execute(client, commands) {
         console.log("Ready!")
+        breadGive(client)
         const CLIENT_ID = client.user.id 
     await mongoose.connect(
         process.env.TESTDB, {

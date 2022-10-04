@@ -11,6 +11,11 @@ const Profile = new mongoose.Schema({
         type:Number,
         required: false,
         default: 0
+    },
+    timeout:{
+        type: Number,
+        required:false,
+        default:0
     }
 })
 
