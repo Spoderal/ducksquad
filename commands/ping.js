@@ -7,7 +7,7 @@ module.exports = {
     .setDescription("Pong!"),
 
     async execute(interaction) {
-
+      //ping spoder
       let embed = new MessageEmbed()
       .setTitle("Ping")
       
