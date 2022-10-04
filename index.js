@@ -16,7 +16,7 @@ const client = new DiscordJS.Client({
     ]
 
 })
-
+// github test
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith('.js'));
 
 const commands = [];
