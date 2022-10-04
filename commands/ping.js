@@ -9,7 +9,7 @@ module.exports = {
     async execute(interaction) {
       //ping spoder
       let embed = new MessageEmbed()
-      .setTitle("Ping")
+      .setTitle("Ping test")
       //ping natix
       
 
