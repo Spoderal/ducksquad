@@ -1,6 +1,6 @@
 const DiscordJS = require('discord.js')
 const fs = require('fs')
-const {GatewayIntentBits} = require('discord.js')
+const Intents = DiscordJS.Intents
 const Collection = DiscordJS.Collection
 const dotenv = require('dotenv')
 
@@ -9,9 +9,8 @@ dotenv.config()
 
 const client = new DiscordJS.Client({
     intents: [
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessageReactions
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES 
 
     ]
 

@@ -7,10 +7,10 @@ module.exports = {
     name: "ready",
     once: true,
     async execute(client, commands) {
-        console.log("Ready")
+        console.log("Ready!")
         const CLIENT_ID = client.user.id 
     await mongoose.connect(
-        process.env.TESTDB, {
+        process.env.db, {
           keepAlive: true
         }
       )
