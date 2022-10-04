@@ -10,6 +10,7 @@ module.exports = {
       //ping spoder
       let embed = new MessageEmbed()
       .setTitle("Ping")
+      //ping natix
       
 
       interaction.reply({embeds: [embed]})
