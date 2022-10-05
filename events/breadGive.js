@@ -11,11 +11,14 @@ module.exports = (client) => {
 
     if(!timeout || timeout == 0){
         userdata.timeout = Date.now()
+        
         userdata.save()
         timeout = userdata.timeout
     }
 
-    console.log(addMinutes(1, timeout))
+    let date = new Date(timeout)
+
+    console.log(addMinutes(1, date))
 
 
     setTimeout(() => {
