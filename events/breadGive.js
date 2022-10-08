@@ -1,5 +1,6 @@
 const lodash = require("lodash");
 const User = require("../schemas/profile-schema")
+const ms = require("ms");
 
 
 module.exports = (client) => {
@@ -18,12 +19,19 @@ module.exports = (client) => {
 
     let date = new Date(timeout)
 
-    console.log(addMinutes(1, date))
+    let newdate = addMinutes(1, date)
 
+    let ms2 = newdate.getTime()
+    let tolog = ms((Date.now() - ms2))
+    console.log(tolog)
+    console.log((Date.now() - ms2))
 
-    setTimeout(() => {
+    if((Date.now() - ms2) > 0) {
+      userdata.bread += 1
+      userdata.timeout = Date.now()
         
-    }, 1000);
+      userdata.save()
+    }
 
   })
 
