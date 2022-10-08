@@ -8,29 +8,32 @@ module.exports = (client) => {
 
     let userdata = await User.findOne({id: message.author.id})
 
-    let timeout = userdata.timeout
-
-    if(!timeout || timeout == 0){
+    if(userdata){
+      
+      let timeout = userdata.timeout
+  
+      if(!timeout || timeout == 0){
+          userdata.timeout = Date.now()
+          
+          userdata.save()
+          timeout = userdata.timeout
+      }
+  
+      let date = new Date(timeout)
+  
+      let newdate = addMinutes(1, date)
+  
+      let ms2 = newdate.getTime()
+      let tolog = ms((Date.now() - ms2))
+      console.log(tolog)
+      console.log((Date.now() - ms2))
+  
+      if((Date.now() - ms2) > 0) {
+        userdata.bread += 1
         userdata.timeout = Date.now()
-        
+          
         userdata.save()
-        timeout = userdata.timeout
-    }
-
-    let date = new Date(timeout)
-
-    let newdate = addMinutes(1, date)
-
-    let ms2 = newdate.getTime()
-    let tolog = ms((Date.now() - ms2))
-    console.log(tolog)
-    console.log((Date.now() - ms2))
-
-    if((Date.now() - ms2) > 0) {
-      userdata.bread += 1
-      userdata.timeout = Date.now()
-        
-      userdata.save()
+      }
     }
 
   })

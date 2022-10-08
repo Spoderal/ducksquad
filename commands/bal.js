@@ -1,6 +1,7 @@
 const {SlashCommandBuilder} = require('@discordjs/builders')
 const {MessageActionRow, MessageButton, MessageEmbed } = require('discord.js')
 const User = require("../schemas/profile-schema")
+const {numberWithCommas} = require("../common/utils")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,7 +20,7 @@ module.exports = {
 
         let embed = new MessageEmbed()
         .setTitle(`${interaction.user.username}'s Bread Balance`)
-        .setDescription(`${breademote} Bread: ${bread}`)
+        .setDescription(`${breademote} Bread: ${numberWithCommas(bread)}`)
         .setColor("#ebbe7f")
 
         //Send the bread amount to the channel
