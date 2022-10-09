@@ -1,0 +1,32 @@
+{
+    "Ducks":{
+        "basic duck":{
+            "Name":"Basic Duck",
+            "Emote":"<:basicduck:1028812200032350259>"
+        }
+
+    },
+    "Eggs":{
+        "moldy":{
+            "Emote":"🥚",
+            "Price":10,
+            "Name":"Moldy",
+            "Bread":500,
+            "Ducks":["basic duck"]
+        },
+        "rainbow":{
+            "Emote":"🥚",
+            "Price":10,
+            "Name":"Rainbow",
+            "Bread":500,
+            "Ducks":["basic duck"]
+        },
+        "regular":{
+            "Emote":"🥚",
+            "Price":25,
+            "Name":"Regular",
+            "Bread":500,
+            "Ducks":["basic duck"]
+        }
+    }
+}

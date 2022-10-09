@@ -21,7 +21,12 @@ const Profile = new mongoose.Schema({
         type: Array,
         required:true,
         default: [{id: `moldyLoaf`, amount: 0}, {id: `regularLoaf`, amount: 0},{id: `rainbowLoaf`, amount: 0}]
-    }
+    },
+    duckeggs:{
+        type: Object,
+        required:true,
+        default: {eggs: [], ducks: []}
+    },
 })
 
 

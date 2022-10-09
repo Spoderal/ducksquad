@@ -1,7 +1,7 @@
 const {SlashCommandBuilder} = require('@discordjs/builders')
 const {MessageActionRow, MessageButton, MessageEmbed } = require('discord.js')
 const User = require("../schemas/profile-schema")
-const Ducks = require("../schemas/duck-schema")
+//const Ducks = require("../schemas/duck-schema")
 const {numberWithCommas} = require("../common/utils")
 const { ButtonStyle } = require('discord-api-types/v10')
 
@@ -25,7 +25,22 @@ module.exports = {
         let moldyLoafs = loafs.filter(loafType => loafType.id == 'moldyLoaf')[0]['amount']
         let regularLoafs = loafs.filter(loafType => loafType.id == 'regularLoaf')[0]['amount']
         let rainbowLoafs = loafs.filter(loafType => loafType.id == 'rainbowLoaf')[0]['amount']
-        
+        let row =  new MessageActionRow().setComponents(
+            new MessageButton()
+            .setCustomId('moldy')
+            .setLabel('Cheap Egg')
+            .setStyle(ButtonStyle.Primary),
+
+            new MessageButton()
+            .setCustomId('regular')
+            .setLabel('Fresh Egg')
+            .setStyle(ButtonStyle.Primary),
+
+            new MessageButton()
+            .setCustomId('rainbow')
+            .setLabel('Rainbow Egg')
+            .setStyle(ButtonStyle.Primary),
+        )
 
         let embed = new MessageEmbed()
         .setTitle(`Welcome to the Shop, ${interaction.user.username}!`)
@@ -34,39 +49,31 @@ module.exports = {
         .addField(`Loafs`, `${moldyLoafs} Moldy Loafs\n${regularLoafs} Regular Loafs\n${rainbowLoafs} Rainbow Loafs`)
 
         //Send the bread amount to the channel
-        interaction.reply({embeds: [embed], components:[
-            new MessageActionRow().setComponents(
-                new MessageButton()
-                .setCustomId('moldy')
-                .setLabel('Cheap Egg')
-                .setStyle(ButtonStyle.Primary),
+        if(moldyLoafs < 10){
+            row.components[0].setDisabled(true)
+  
+        }
+       let msg = await interaction.reply({embeds: [embed], components:[row], fetchReply: true})
 
-                new MessageButton()
-                .setCustomId('regular')
-                .setLabel('Fresh Egg')
-                .setStyle(ButtonStyle.Primary),
+       let filter = (btnInt) => {
+        return interaction.user.id === btnInt.user.id;
+      };
 
-                new MessageButton()
-                .setCustomId('rainbow')
-                .setLabel('Rainbow Egg')
-                .setStyle(ButtonStyle.Primary),
-            )
-            //.addComponents(
-            //     new ButtonBuilder()
-            //     .setCustomId('moldy')
-            //     .setLabel('Cheap Egg')
-            //     .setStyle(ButtonStyle.Primary),
-            //     new ButtonBuilder()
-            //     .setCustomId('regular')
-            //     .setLabel('Fresh Egg')
-            //     .setStyle(ButtonStyle.Primary),
-            //     new ButtonBuilder()
-            //     .setCustomId('rainbow')
-            //     .setLabel('Rainbow Egg')
-            //     .setStyle(ButtonStyle.Primary),
-            // )
-        ]
-    })
+      let collector = msg.createMessageComponentCollector({
+        filter: filter,
+      });
+
+
+      collector.on("collect", async (i) => {
+        if(i.customId.includes("moldy")) {
+            userdata.duckeggs.eggs.push("moldy")
+            await i.update(`Bought a moldy egg`)
+        }
+
+        userdata.markModified('duckeggs')
+        userdata.save()
+      })
+
 
     }
 }
