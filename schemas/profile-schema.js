@@ -16,6 +16,11 @@ const Profile = new mongoose.Schema({
         type: Number,
         required:false,
         default:0
+    },
+    loafs:{
+        type: Array,
+        required:true,
+        default: [{id: `moldyLoaf`, amount: 0}, {id: `regularLoaf`, amount: 0},{id: `rainbowLoaf`, amount: 0}]
     }
 })
 
