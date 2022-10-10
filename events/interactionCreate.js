@@ -18,7 +18,5 @@ module.exports = {
     
             await interaction.reply({content: "An error occurred while executing that command, please contact the support team", ephemeral: true})
         }
-
-      
     }
 }

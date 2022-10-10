@@ -48,10 +48,15 @@ module.exports = {
         .setColor("#ebbe7f")
         .addField(`Loafs`, `${moldyLoafs} Moldy Loafs\n${regularLoafs} Regular Loafs\n${rainbowLoafs} Rainbow Loafs`)
 
-        //Send the bread amount to the channel
+        
         if(moldyLoafs < 10){
             row.components[0].setDisabled(true)
-  
+        }
+        if(regularLoafs < 10){
+          row.components[1].setDisabled(true)
+        }
+        if(rainbowLoafs < 10){
+          row.components[2].setDisabled(true)
         }
        let msg = await interaction.reply({embeds: [embed], components:[row], fetchReply: true})
 
@@ -67,9 +72,44 @@ module.exports = {
       collector.on("collect", async (i) => {
         if(i.customId.includes("moldy")) {
             userdata.duckeggs.eggs.push("moldy")
-            await i.update(`Bought a moldy egg`)
+            userdata.loafs[0]['amount'] -= 10
+            moldyLoafs = loafs.filter(loafType => loafType.id == 'moldyLoaf')[0]['amount']
+            if(moldyLoafs < 10){
+              row.components[0].setDisabled(true)
+            }
+            await i.update(`Bought a **Moldy Egg**`)
+        }
+        else if(i.customId.includes("regular")) {
+          userdata.duckeggs.eggs.push("regular")
+          userdata.loafs[1]['amount'] -= 10
+          regularLoafs = loafs.filter(loafType => loafType.id == 'regularLoaf')[0]['amount']
+          if(regularLoafs < 10){
+            row.components[1].setDisabled(true)
+          }
+          await i.update(`Bought a **Regular Egg**`)
+        }
+        else if(i.customId.includes("rainbow")) {
+          userdata.duckeggs.eggs.push("rainbow")
+          userdata.loafs[2]['amount'] -= 10
+          rainbowLoafs = loafs.filter(loafType => loafType.id == 'rainbowLoaf')[0]['amount']
+          if(rainbowLoafs < 10){
+            row.components[2].setDisabled(true)
+          }
+          await i.update(`Bought a **Rainbow Egg**`)
         }
 
+
+        let embed = new MessageEmbed()
+        .setTitle(`Welcome to the Shop, ${interaction.user.username}!`)
+        .setDescription(`${breademote} Bread: ${numberWithCommas(bread)}`)
+        .setColor("#ebbe7f")
+        .addField(`Loafs`, `${moldyLoafs} Moldy Loafs\n${regularLoafs} Regular Loafs\n${rainbowLoafs} Rainbow Loafs`)
+
+
+
+        await msg.edit({embeds: [embed], components:[row], fetchReply: true})
+
+        userdata.markModified('loafs')
         userdata.markModified('duckeggs')
         userdata.save()
       })
